@@ -5,9 +5,9 @@
   "description": "Track your study progress and earn real money.",
   "version": "1.0",
 
-  "permissions": ["<all_urls>" , "tabs", "pageCapture"],
+  "permissions": ["<all_urls>" , "tabs", "pageCapture", "cookies", "idle"],
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "icons/icon.png",
     "default_popup": "popup.html"
   },
   "background": {

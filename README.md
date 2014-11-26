@@ -1,6 +1,6 @@
 ## StudyPact Chrome Extension
 
-Track your studies and earn money
+Track your studies and earn money for completing your study goals
 
 ## From Skeletton
 * includes awesome messaging module

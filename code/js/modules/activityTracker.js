@@ -12,11 +12,11 @@ function ActivityTracker() {
   function handleStateChange(state) {
     if (state === "idle") {
       chrome.browserAction.setIcon({
-        path: "icons/ic_not_studying.png"
+        path: "images/ic_not_studying.png"
       }); 
     } else {
       chrome.browserAction.setIcon({
-        path: "icons/icon.png"
+        path: "images/icon.png"
       });
     }
     console.log("NEW STATE:", state);

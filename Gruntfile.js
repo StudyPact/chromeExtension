@@ -3,8 +3,13 @@ module.exports = function(grunt) {
   var pkg = grunt.file.readJSON('package.json');
   var mnf = grunt.file.readJSON('code/manifest.json');
 
-  var fileMaps = { browserify: {}, uglify: {} };
-  var file, files = grunt.file.expand({cwd:'code/js'}, ['*.js']);
+  var fileMaps = {
+    browserify: {},
+    uglify: {}
+  };
+  var file, files = grunt.file.expand({
+    cwd: 'code/js'
+  }, ['*.js']);
   for (var i = 0; i < files.length; i++) {
     file = files[i];
     fileMaps.browserify['build/unpacked-dev/js/' + file] = 'code/js/' + file;
@@ -20,49 +25,71 @@ module.exports = function(grunt) {
     clean: ['build/unpacked-dev', 'build/unpacked-prod', 'build/*.crx'],
 
     mkdir: {
-      unpacked: { options: { create: ['build/unpacked-dev', 'build/unpacked-prod'] } },
-      js: { options: { create: ['build/unpacked-dev/js'] } }
+      unpacked: {
+        options: {
+          create: ['build/unpacked-dev', 'build/unpacked-prod']
+        }
+      },
+      js: {
+        options: {
+          create: ['build/unpacked-dev/js']
+        }
+      }
     },
 
     jshint: {
       options: grunt.file.readJSON('.jshintrc'), // see http://www.jshint.com/docs/options/
-      all: { src: ['package.json', '.jshintrc', 'Gruntfile.js', 'code/**/*.js',
-                   'code/**/*.json', '!code/js/libs/*'] }
+      all: {
+        src: ['package.json', '.jshintrc', 'Gruntfile.js', 'code/**/*.js',
+          'code/**/*.json', '!code/js/libs/*'
+        ]
+      }
     },
 
     mochaTest: {
-      options: { colors: true, reporter: 'spec' },
+      options: {
+        colors: true,
+        reporter: 'spec'
+      },
       files: ['code/**/*.spec.js']
     },
 
     copy: {
-      main: { files: [ {
-        expand: true,
-        cwd: 'code/',
-        src: ['**', '!js/**', '!**/*.md'],
-        dest: 'build/unpacked-dev/'
-      } ] },
-      prod: { files: [ {
-        expand: true,
-        cwd: 'build/unpacked-dev/',
-        src: ['**', '!js/*.js'],
-        dest: 'build/unpacked-prod/'
-      } ] },
-      artifact: { files: [ {
-        expand: true,
-        cwd: 'build/',
-        src: [pkg.name + '-' + pkg.version + '.crx'],
-        dest: process.env.CIRCLE_ARTIFACTS
-      } ] }
+      main: {
+        files: [{
+          expand: true,
+          cwd: 'code/',
+          src: ['**', '!js/**', '!**/*.md'],
+          dest: 'build/unpacked-dev/'
+        }]
+      },
+      prod: {
+        files: [{
+          expand: true,
+          cwd: 'build/unpacked-dev/',
+          src: ['**', '!js/*.js'],
+          dest: 'build/unpacked-prod/'
+        }]
+      },
+      artifact: {
+        files: [{
+          expand: true,
+          cwd: 'build/',
+          src: [pkg.name + '-' + pkg.version + '.crx'],
+          dest: process.env.CIRCLE_ARTIFACTS
+        }]
+      }
     },
 
     browserify: {
       build: {
         files: fileMaps.browserify,
-        options: { bundleOptions: {
-          debug: true,  // for source maps
-          standalone: pkg['export-symbol']
-        } }
+        options: {
+          bundleOptions: {
+            debug: true, // for source maps
+            standalone: pkg['export-symbol']
+          }
+        }
       }
     },
 
@@ -76,16 +103,27 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      min: { files: fileMaps.uglify }
+      min: {
+        files: fileMaps.uglify
+      }
     },
 
     watch: {
-      js: {
+      test: {
         files: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
-                'code/**/*.json', '!code/js/libs/*'],
+          'code/**/*.json', '!code/js/libs/*'
+        ],
         tasks: ['test']
+      },
+      buildDev: {
+        files: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
+          'code/**/*.json', '!code/js/libs/*'
+        ],
+        tasks: ['clean', 'test', 'mkdir:unpacked', 'copy:main',
+          'manifest', 'mkdir:js', 'browserify'
+        ]
       }
-    }
+    },
 
   });
 
@@ -119,8 +157,11 @@ module.exports = function(grunt) {
   grunt.registerTask(
     'circleci', 'Store built extension as CircleCI arfitact',
     function() {
-      if (process.env.CIRCLE_ARTIFACTS) { grunt.task.run('copy:artifact'); }
-      else { grunt.log.ok('Not on CircleCI, skipped'); }
+      if (process.env.CIRCLE_ARTIFACTS) {
+        grunt.task.run('copy:artifact');
+      } else {
+        grunt.log.ok('Not on CircleCI, skipped');
+      }
     }
   );
 
@@ -130,12 +171,14 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jshint', 'mochaTest']);
   grunt.registerTask('test-cont', ['test', 'watch']);
+  grunt.registerTask('watch-build-dev', ['watch:buildDev']);
 
   //
   // DEFAULT
   //
 
   grunt.registerTask('default', ['clean', 'test', 'mkdir:unpacked', 'copy:main', 'manifest',
-    'mkdir:js', 'browserify', 'copy:prod', 'uglify', 'exec', 'circleci']);
+    'mkdir:js', 'browserify', 'copy:prod', 'uglify', 'exec', 'circleci'
+  ]);
 
 };

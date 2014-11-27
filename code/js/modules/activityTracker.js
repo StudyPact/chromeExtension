@@ -1,19 +1,25 @@
+var Q = require("q");
+
+var studyAppController = require("./studyAppController");
+
 function ActivityTracker() {
-  function getUrl(callback) {
+  function getUrl() {
+    var deferred = Q.defer();
     var query = {
       active: true,
       currentWindow: true
     };
     chrome.tabs.query(query, function(tab) {
-      callback(tab[0].url);
-    }); 
-  } 
- 
+      deferred.resolve(tab[0].url);
+    });
+    return deferred.promise;
+  }
+
   function handleStateChange(state) {
     if (state === "idle") {
       chrome.browserAction.setIcon({
         path: "images/ic_not_studying.png"
-      }); 
+      });
     } else {
       chrome.browserAction.setIcon({
         path: "images/icon.png"
@@ -22,32 +28,36 @@ function ActivityTracker() {
     console.log("NEW STATE:", state);
   }
 
+  function handleUserEvent() {
+    var url = getUrl();
+    var studyApp = studyAppController.findStudyAppsByUrl(url);
+    studyApp.then(function(app){
+      console.log("APP",app);
+    });
+  }
+
   function handleTabUpdated(tabId, changeInfo, tab) {
     if (tab && tab.active) {
-      getUrl(function(url) {
-        console.log("TAB UPDATED:", url);
-      });
+      console.log("TAB UPDATED");
+      handleUserEvent();
     }
   }
 
   function handleTabCreated(tabId, changeInfo, tab) {
     if (tab && tab.active) {
-      getUrl(function(url) {
-        console.log("TAB CREATED:", url);
-      });
+      console.log("TAB CREATED");
+      handleUserEvent();
     }
   }
 
   function handleTabActivated() {
-    getUrl(function(url) {
-      console.log("TAB ACTIVATED:", url);
-    });
+    console.log("TAB ACTIVATED");
+    handleUserEvent();
   }
 
   function handleWindowFocusChange() {
-    getUrl(function(url) {
-      console.log("WINDOWS FOCUS CHANGED:", url);
-    });
+    console.log("WINDOWS FOCUS CHANGED");
+    handleUserEvent();
   }
 
   function setupHooks() {

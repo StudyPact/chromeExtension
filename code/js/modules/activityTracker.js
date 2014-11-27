@@ -1,7 +1,12 @@
 var Q = require("q");
 
 var studyAppController = require("./studyAppController");
+var studyEventController = require("./studyEventController");
 
+var userState={
+  active:true,
+  studyapp:null,
+};
 function ActivityTracker() {
   function getUrl() {
     var deferred = Q.defer();
@@ -14,25 +19,34 @@ function ActivityTracker() {
     });
     return deferred.promise;
   }
-
   function handleStateChange(state) {
+    var userActive;
     if (state === "idle") {
+      userActive=false;
       chrome.browserAction.setIcon({
         path: "images/ic_not_studying.png"
       });
     } else {
+      userActive=true;
       chrome.browserAction.setIcon({
         path: "images/icon.png"
       });
     }
-    console.log("NEW STATE:", state);
+    if (userState.active!==userActive){
+      userState.active=userActive;
+      studyEventController.handleUserStateChange(userActive);
+    }
   }
 
   function handleUserEvent() {
     var url = getUrl();
     var studyApp = studyAppController.findStudyAppsByUrl(url);
     studyApp.then(function(app){
-      console.log("APP",app);
+      var previousApp = userState.studyapp;
+      if (previousApp!==app){
+        studyEventController.handleStudyAppChange(app);
+        userState.studyapp=app;
+      }
     });
   }
 

@@ -8,13 +8,14 @@ AuthController.getAccessToken = function() {
     return new Q(accessToken);
   }
   var query = {
-    url: "http://studypact-webapp-test.herokuapp.com",
+    url: "http://localhost",
     name: "accessToken"
   }; 
   var deferred = Q.defer();
   chrome.cookies.get(query, deferred.resolve);
   deferred.promise.then(function(cookie){
     accessToken=cookie;
+    console.log("COOKIE", cookie);
   });
   return deferred.promise;
 };

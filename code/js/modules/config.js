@@ -1,5 +1,5 @@
 var Config = {
-  host: "http://localhost:5000",
+  host: "https://studypact-rest-test.herokuapp.com",
   apiVersion: 2
 };
 

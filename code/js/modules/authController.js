@@ -13,10 +13,13 @@ AuthController.getAccessToken = function() {
   var deferred = Q.defer();
   chrome.cookies.get(query, deferred.resolve);
   deferred.promise.then(function(cookie){
-    if(cookie.value){
+    console.log("Found COOKIE:", cookie);
+    if(cookie && cookie.value){
+      console.log("Emitting: hasCookie");
       bus.emit("state:update", "hasCookie");
     }
-    if(!cookie.value){
+    else{
+      console.log("Emitting: noCookie");
       bus.emit("state:update", "noCookie");
     }
   });

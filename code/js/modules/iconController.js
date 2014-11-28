@@ -37,6 +37,7 @@ function IconController() {
   }
 
   function setIcon(icon) {
+    console.log("setIcon:", icon);
     chrome.browserAction.setIcon({
       path: "images/menubar/" + icon + ".png"
     });

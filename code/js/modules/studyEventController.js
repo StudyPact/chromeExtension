@@ -1,8 +1,10 @@
+var Q = require("q");
+
 var StudyEventController = {};
 var authController = require("./authController");
 var config = require("./config");
 var $ = require("../libs/jquery");
-var Q = require("q");
+var bus = require("./lib/simpleBus");
 
 var userState = {
   active: true,
@@ -73,6 +75,12 @@ StudyEventController.handleUserStateChange = function(userActive) {
 
 StudyEventController.handleStudyAppChange = function(currentStudyApp) {
   console.log("Study App Change", currentStudyApp);
+  if(currentStudyApp){
+    bus.emit("state:update", "studying");
+  }
+  else{
+    bus.emit("state:update", "notStudying");
+  }
   finishStudyEvent();
   if (currentStudyApp && userState.active) {
     startStudyEvent(currentStudyApp);

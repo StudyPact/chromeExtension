@@ -2,6 +2,7 @@ var Q = require("q");
 
 var studyAppController = require("./studyAppController");
 var studyEventController = require("./studyEventController");
+var bus = require("./lib/simpleBus");
 
 var userState={
   active:true,
@@ -23,14 +24,10 @@ function ActivityTracker() {
     var userActive;
     if (state === "idle") {
       userActive=false;
-      chrome.browserAction.setIcon({
-        path: "images/ic_not_studying.png"
-      });
+      bus.emit("state:update", "userIdle");
     } else {
       userActive=true;
-      chrome.browserAction.setIcon({
-        path: "images/icon.png"
-      });
+      bus.emit("state:update", "userActive");
     }
     if (userState.active!==userActive){
       userState.active=userActive;

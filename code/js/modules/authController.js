@@ -1,13 +1,10 @@
 var Q = require("q");
 
 var AuthController = {};
-var accessToken;
 var config = require("./config");
+var bus = require("./lib/simpleBus");
 
 AuthController.getAccessToken = function() {
-  if (accessToken){
-    return new Q(accessToken);
-  }
   var query = {
     url: config.webapp_url,
     name: "accessToken"
@@ -16,8 +13,12 @@ AuthController.getAccessToken = function() {
   var deferred = Q.defer();
   chrome.cookies.get(query, deferred.resolve);
   deferred.promise.then(function(cookie){
-    accessToken=cookie;
-    console.log("COOKIE", cookie);
+    if(cookie.value){
+      bus.emit("state:update", "hasCookie");
+    }
+    if(!cookie.value){
+      bus.emit("state:update", "noCookie");
+    }
   });
   return deferred.promise;
 };

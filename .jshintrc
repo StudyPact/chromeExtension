@@ -13,6 +13,7 @@
   "boss": true,
   "eqnull": true,
   "strict": false,
+  "quotmark":false,
   "globals": {
     "beforeEach": true,
     "describe": true,

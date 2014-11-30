@@ -116,7 +116,7 @@ module.exports = function(grunt) {
         tasks: ['test']
       },
       buildDev: {
-        files: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js',
+        files: ['package.json', 'lint-options.json', 'Gruntfile.js', 'code/**/*.js', 'code/**/*.html',
           'code/**/*.json', '!code/js/libs/*'
         ],
         tasks: ['clean', 'test', 'mkdir:unpacked', 'copy:main',

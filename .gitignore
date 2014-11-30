@@ -6,3 +6,4 @@ build/unpacked-dev
 build/unpacked-prod
 *.swp
 *.pem
+.idea

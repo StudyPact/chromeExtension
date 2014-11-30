@@ -1,4 +1,12 @@
+'use strict';
+
 ;(function() {
+  var $ = require('./libs/jquery');
   console.log('POPUP SCRIPT WORKS!');
-  //var msg = require('./modules/bus/msg');
+  $(document).ready(function() {
+    $('#submit').click(function(){
+      console.log("test");
+    });
+  });
+
 })();

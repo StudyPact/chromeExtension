@@ -19,6 +19,7 @@
     "describe": true,
     "afterEach": true,
     "it": true,
-    "chrome":true
+    "chrome":true,
+    "document": true
   }
 }

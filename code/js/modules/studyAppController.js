@@ -28,6 +28,7 @@ StudyAppController.loadWebApps = function() {
 };
 
 StudyAppController.addStudyApp = function(app) {
+  console.log("about to send new studyapp:", app);
   return authController.getAccessToken()
     .then(function(token) {
       return new Q($.ajax({

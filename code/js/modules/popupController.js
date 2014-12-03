@@ -29,7 +29,10 @@ function setupAddStudyAppButton() {
   $('#addStudyAppSubmit').click(function() {
     var url = ChromeTools.getCurrentUrl();
     var title = ChromeTools.getCurrentTitle();
-    Q.all([url,title], function(url,title){
+    Q.all([url,title]).then(function(result){
+      var url = result[0];
+      var title = result[1];
+      console.log("received:", url, title);
       var host = urlparse.parse(url).hostname;
       var app = {
         website_urls:[host],
@@ -37,9 +40,8 @@ function setupAddStudyAppButton() {
       };
       return StudyAppController.addStudyApp(app);
     })
-    .then(function(){
-      console.log("Successfully sent studyApp");
-      window.close();
+    .then(function(result){
+      console.log("Successfully sent studyApp",result);
     })
     .fail(function(error){
       console.warn("Failed to send app:", error);

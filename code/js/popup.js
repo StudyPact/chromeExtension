@@ -2,10 +2,14 @@
 
 ;(function() {
   var $ = require('./libs/jquery');
-  var PopupController = require('./modules/popupController');
-  
+  var popupController = require('./modules/popupController');
+  var authController = require("./modules/authController");
+  var studyAppController = require("./modules/studyAppController");
+
   $(document).ready(function() {
-    PopupController.boot();
+    popupController.boot();
+    authController.boot();
+    studyAppController.boot();
   });
 
 })();

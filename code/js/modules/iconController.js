@@ -1,4 +1,5 @@
 var bus = require("./lib/simpleBus");
+var chromeBus = require("./lib/chromeBus");
 
 var systemState = {
   active: true,
@@ -58,10 +59,12 @@ function IconController() {
 
   function setupHooks() {
     bus.on("state:update", handleStateUpdate);
+    chromeBus.on("state:update", handleStateUpdate);
   }
 
   function removeHooks() {
     bus.removeListener("state:update", handleStateUpdate);
+    chromeBus.removeListener("state:update", handleStateUpdate);
   }
 
   this.boot = function() {

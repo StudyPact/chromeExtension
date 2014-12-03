@@ -1,6 +1,10 @@
 var $ = require('../libs/jquery');
+var Q = require("q");
+var urlparse = require("url");
+
 var AuthController = require("./authController");
 var StudyAppController = require("./studyAppController");
+var ChromeTools = require("./chromeTools");
 
 var LoginFormController = {};
 var state = {};
@@ -23,10 +27,16 @@ function displayError(error) {
 function setupAddStudyAppButton() {
   $('#addStudyAppSubmit').off("click");
   $('#addStudyAppSubmit').click(function() {
-    var app = {
-
-    };
-    StudyAppController.addStudyApp(app)
+    var url = ChromeTools.getCurrentUrl();
+    var title = ChromeTools.getCurrentTitle();
+    Q.all([url,title], function(url,title){
+      var host = urlparse.parse(url).hostname;
+      var app = {
+        website_urls:[host],
+        name: title
+      };
+      return StudyAppController.addStudyApp(app);
+    })
     .then(function(){
       console.log("Successfully sent studyApp");
       window.close();

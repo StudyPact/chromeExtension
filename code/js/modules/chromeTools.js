@@ -22,4 +22,12 @@ ChromeTools.getCurrentUrl = function() {
   });
 };
 
+ChromeTools.getCurrentTitle = function() {
+  var tab = getCurrentTab();
+  return tab.then(function(tab) {
+    return tab.title;
+  });
+};
+
+
 module.exports = ChromeTools;

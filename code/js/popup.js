@@ -2,10 +2,10 @@
 
 ;(function() {
   var $ = require('./libs/jquery');
-  var LoginFormController = require('./modules/popup/loginFormController');
+  var PopupController = require('./modules/popup/popupController');
   
   $(document).ready(function() {
-    LoginFormController.boot();
+    PopupController.boot();
   });
 
 })();

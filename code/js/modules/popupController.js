@@ -1,5 +1,5 @@
-var $ = require('../../libs/jquery');
-var AuthController = require("../authController");
+var $ = require('../libs/jquery');
+var AuthController = require("./authController");
 
 var LoginFormController = {};
 var state = {};

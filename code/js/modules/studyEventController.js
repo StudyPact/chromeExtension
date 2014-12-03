@@ -27,7 +27,7 @@ function sendStudyEvent(studyevent) {
       type: "POST",
       url: config.host + "/api/studyevents",
       headers: {
-        "Authorization": "Bearer " + token.value,
+        "Authorization": "Bearer " + token,
         "version": config.apiVersion
       },
       data: JSON.stringify(studyevent),

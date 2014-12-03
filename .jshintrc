@@ -20,6 +20,7 @@
     "afterEach": true,
     "it": true,
     "chrome":true,
-    "document": true
+    "document": true,
+    "window": true
   }
 }

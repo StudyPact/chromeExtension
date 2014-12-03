@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <script src="../js/popup.js" type="text/javascript"></script>
-  </head>
-  <body>
+
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="../css/common.css">
+  <script src="../js/popup.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <div id="loginForm" style="display: none;">
     <h1>Login</h1>
     <fieldset>
       <label>
-        <input type="text" name="type" id="email">
-        Email
+        <input type="text" name="type" id="email"> Email
       </label>
       <label>
-        <input type="password" name="type" id="password">
-        Password
+        <input type="password" name="type" id="password"> Password
       </label>
     </fieldset>
+    <div id="error" style="display: none;"> 
+      <p>
+      </p>
+    </div>
     <div>
       <button id="submit">Login!</button>
     </div>
-  </body>
+  </div>
+  <div id="addStudyAppForm" style="display: none;">
+    <h1>Request Study App</h1>
+    <div>
+      <button id="submit">Send Request</button>
+    </div>
+  </div>
+</body>
+
 </html>

@@ -1,5 +1,6 @@
 var $ = require('../libs/jquery');
 var AuthController = require("./authController");
+var StudyAppController = require("./studyAppController");
 
 var LoginFormController = {};
 var state = {};
@@ -14,15 +15,33 @@ function displayRequestStudyAppForm() {
   $("#addStudyAppForm").show();
 }
 
-function displayError() {
-  console.log("what the hack?", $("#error p"));
+function displayError(error) {
   $("#error").show();
-  $("#error p").text("Could not login, please try again");
+  $("#error p").text(error);
+}
+
+function setupAddStudyAppButton() {
+  $('#addStudyAppSubmit').off("click");
+  $('#addStudyAppSubmit').click(function() {
+    var app = {
+
+    };
+    StudyAppController.addStudyApp(app)
+    .then(function(){
+      console.log("Successfully sent studyApp");
+      window.close();
+    })
+    .fail(function(error){
+      console.warn("Failed to send app:", error);
+      displayError("Could not login, please try again");
+    });
+
+  });
 }
 
 function setupLoginButton() {
-  $('#submit').off("click");
-  $('#submit').click(function() {
+  $('#loginSubmit').off("click");
+  $('#loginSubmit').click(function() {
     var email = $("#email").val();
     var password = $("#password").val();
     AuthController.login(email,password)
@@ -32,7 +51,7 @@ function setupLoginButton() {
     })
     .fail(function(error){
       console.warn("Failed to log in:", error);
-      displayError();
+      displayError("Could not login, please try again");
     });
 
   });
@@ -53,6 +72,7 @@ LoginFormController.boot = function() {
     }
   });
   setupLoginButton();
+  setupAddStudyAppButton();
 };
 
 LoginFormController.shutdown = function() {};

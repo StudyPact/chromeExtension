@@ -1,7 +1,6 @@
-var Q = require("q");
-
 var studyAppController = require("./studyAppController");
 var studyEventController = require("./studyEventController");
+var chromeTools = require("./chromeTools");
 var bus = require("./lib/simpleBus");
 
 var userState={
@@ -9,17 +8,6 @@ var userState={
   studyapp:null,
 };
 function ActivityTracker() {
-  function getUrl() {
-    var deferred = Q.defer();
-    var query = {
-      active: true,
-      currentWindow: true
-    };
-    chrome.tabs.query(query, function(tab) {
-      deferred.resolve(tab[0].url);
-    });
-    return deferred.promise;
-  }
   function handleStateChange(state) {
     var userActive;
     if (state === "idle") {
@@ -36,7 +24,7 @@ function ActivityTracker() {
   }
 
   function handleUserEvent() {
-    var url = getUrl();
+    var url = chromeTools.getCurrentUrl();
     var studyApp = studyAppController.findStudyAppsByUrl(url);
     studyApp.then(function(app){
       var previousApp = userState.studyapp;

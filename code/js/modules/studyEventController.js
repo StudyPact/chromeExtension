@@ -8,7 +8,8 @@ var bus = require("./lib/chromeBus");
 
 var userState = {
   active: true,
-  studyapp: null
+  studyapp: null,
+  timeOffset: 0,
 };
 
 function getCurrentTimestampWithServerOffset() {
@@ -48,6 +49,7 @@ function startStudyEvent(studyApp) {
     start: getCurrentTimestampWithServerOffset(),
     studyapp: studyApp._id,
   };
+  bus.emit("studyevent:start", currentStudyEvent);
 }
 
 function finishStudyEvent() {
@@ -57,6 +59,7 @@ function finishStudyEvent() {
   }
   currentStudyEvent.end = getCurrentTimestampWithServerOffset();
   sendStudyEvent(currentStudyEvent);
+  bus.emit("studyevent:end", currentStudyEvent);
   currentStudyEvent = null;
 }
 

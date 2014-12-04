@@ -32,7 +32,7 @@ function IconController() {
     if (systemState.cookie) {
       return setLoggedInIcon();
     } else {
-      return setIcon("please_login");
+      return setIcon("not_login");
     }
 
   }
@@ -47,13 +47,13 @@ function IconController() {
   function setLoggedInIcon() {
     console.log("setLoggedInIcon", systemState);
     if (systemState.studying && systemState.active) {
-      return setIcon("active_studying");
+      return setIcon("tracking");
     }
     if (systemState.studying && !systemState.active) {
-      return setIcon("lazy");
+      return setIcon("sleeping");
     }
     if (!systemState.studying) {
-      return setIcon("passive");
+      return setIcon("login");
     }
   }
 

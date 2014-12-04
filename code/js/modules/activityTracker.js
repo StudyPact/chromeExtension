@@ -1,7 +1,7 @@
 var studyAppController = require("./studyAppController");
 var studyEventController = require("./studyEventController");
 var chromeTools = require("./chromeTools");
-var bus = require("./lib/simpleBus");
+var bus = require("./lib/chromeBus");
 
 var userState={
   active:true,

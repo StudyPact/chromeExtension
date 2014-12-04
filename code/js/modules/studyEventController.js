@@ -4,7 +4,7 @@ var StudyEventController = {};
 var authController = require("./authController");
 var config = require("./config");
 var $ = require("../libs/jquery");
-var bus = require("./lib/simpleBus");
+var bus = require("./lib/chromeBus");
 
 var userState = {
   active: true,

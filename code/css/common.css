@@ -1,11 +1,7 @@
 body {
 	font-family: Arial;
 	font-size: 12px;
-	min-width: 230px;
-	min-height: 320px;
-	overflow-x: hidden;
-	background-image: url("../images/bg.jpg");
-	background-repeat: no-repeat;
+	background:#00ADEE;
 	} 
 
 input[type="text"]{
@@ -25,7 +21,7 @@ input[type="text"]{
 	-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
 	box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
 	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-top: 90px;
 	margin-left: 10px;
 	margin-right: 10px;
 	max-width:210px;
@@ -51,38 +47,105 @@ input[type="password"]{
 	margin-right: 10px;
 	max-width:210px;
 	}
+	
+#loginForm{
+	width:100%;
+	height:100%;
+	min-width: 230px;
+	min-height: 410px;
+	overflow-x: hidden;
+	background-image: url("../images/bg.jpg");
+	}
 
+#addStudyAppForm{
+	width:100%;
+	height:100%;
+	min-width: 230px;
+	min-height: 410px;
+	overflow-x: hidden;
+	background-image: url("../images/bg.jpg");
+	}
+
+#studyStatus{
+	width:100%;
+	height:100%;
+	min-width: 230px;
+	min-height: 410px;
+	overflow-x: hidden;
+	background-image: url("../images/bg.jpg");
+	}
+
+#playstore { 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#activity { 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
+
+#downloadlogo { 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
+
+#optionlogo { 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*Layout*/
+#left{
+	width:100%;
+	
+}
+
+#right{
+	width:100%;
+	
+}
+
+.clear
+    {
+	clear: both;
+    }
+
+.option{
+	text-align:center;
+	margin-top:70px;
+	padding:20px;
+	background:#33ccff;
+	margin-left:auto;
+	margin-right:auto;
+	max-width:50%;
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+	}
+	
+/*Text*/
 p{
 	font-size: 12px;
 	color: #FFFFFF;
 	float: left;
-	margin-left: 15px;
-	}
-	
+	margin-left: 20px;
+	}	
+
 h4{
 	font-size: 9px;
 	color: #FFFFFF;
 	float: right;
 	margin-right: 15px;
 	}
-
-h1{
-	font-size: 21px;
-	color: #FFFFFF;
-	margin-top: 80px;
-	font-family: Arial;
-	text-align: center;
-	}
-	
-#loginForm{
-	margin-top: 80px;	
-	}
-
-img { 
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
 
 h3{
 	font-size: 12px;
@@ -95,12 +158,42 @@ h3{
 	font-family: Arial;
 	text-align: center;
 	font-weight: lighter;
+	}	
+
+h2{
+	font-size: 12px;
+	color: #FFFFFF;
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	font-style: normal;
+	font-family: Arial;
+	text-align: center;
+	font-weight: lighter;
+	}		
+
+h1{
+	font-size: 21px;
+	color: #FFFFFF;
+	margin-top: 80px;
+	font-family: Arial;
+	text-align: center;
 	}
 
+#option h1{
+	font-size: 21px;
+	color: #FFFFFF;
+	margin-top: 10px;
+	font-family: Arial;
+	text-align: center;
+	}
+	
 label { display: block; }
 
 td { vertical-align: top; }
 
+/*Buttons*/
 #loginSubmit { 
 	width: 90%; 
 	margin-top: 5px;
@@ -120,9 +213,9 @@ td { vertical-align: top; }
 }
 
 #loginSubmit:hover {
-	background: #FFEC00;
+	background: #f05a28;
 	text-decoration: none;
-	color: #000;
+	color: #fff;
 	max-width:210px;
 }
 
@@ -145,8 +238,33 @@ td { vertical-align: top; }
 }
 
 #addStudyAppSubmit:hover {
-	background: #FFEC00;
+	background: #f05a28;
 	text-decoration: none;
-	color: #000;
+	color: #fff;
+	max-width:210px;
+}
+
+#logout{ 
+	width: 90%; 
+	margin-top: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 14px;
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+	font-family: Arial;
+	border: none;
+	color: #5D5D5D;
+	background: #F8EC2B;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
+	max-width:210px;
+}
+
+#logout:hover {
+	background: #f05a28;
+	text-decoration: none;
+	color: #fff;
 	max-width:210px;
 }

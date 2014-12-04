@@ -3,8 +3,7 @@ var $ = require('../libs/jquery');
 
 var AuthController = {};
 var config = require("./config");
-var bus = require("./lib/simpleBus");
-var chromeBus = require("./lib/chromeBus");
+var bus = require("./lib/chromeBus");
 
 AuthController.saveToken = function(accessToken) {
   var deferred = Q.defer();
@@ -40,7 +39,7 @@ AuthController.login = function(email, password) {
     return AuthController.saveToken(token)
     .then(function(){
       console.log("Emitting status:update hasCookie");
-      chromeBus.emit("state:update", "hasCookie");
+      bus.emit("state:update", "hasCookie");
     });
   });
 };

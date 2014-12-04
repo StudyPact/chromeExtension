@@ -54,20 +54,31 @@ function setupAddStudyAppButton() {
   });
 }
 
+function login() {
+  var email = $("#email").val();
+  var password = $("#password").val();
+  AuthController.login(email, password)
+    .then(function() {
+      console.log("Successfully Logged In");
+      window.close();
+    })
+    .fail(function(error) {
+      console.warn("Failed to log in:", error);
+      displayError("Could not login, please try again");
+    });
+}
+
 function setupLoginButton() {
   $('#loginSubmit').off("click");
-  $('#loginSubmit').click(function() {
-    var email = $("#email").val();
-    var password = $("#password").val();
-    AuthController.login(email, password)
-      .then(function() {
-        console.log("Successfully Logged In");
-        window.close();
-      })
-      .fail(function(error) {
-        console.warn("Failed to log in:", error);
-        displayError("Could not login, please try again");
-      });
+  $('#loginSubmit').click(login);
+
+  $('.loginInput').keyup(function(e) {
+    if (e.which !== 13) {
+      return;
+    }
+    e.preventDefault();
+    // Submit the form.
+    login();
   });
 }
 
@@ -81,16 +92,15 @@ function handleStateUpdate(stateChange) {
   }
 }
 
-function storeInitialState(initialState){
+function storeInitialState(initialState) {
   console.log("storeInitialState called", initialState);
-  state=initialState;
+  state = initialState;
   if (!state.cookie) {
     display("loginForm");
   } else {
-    if (state.studying){
+    if (state.studying) {
       display("studyStatus");
-    }
-    else{
+    } else {
       display("addStudyAppForm");
     }
   }

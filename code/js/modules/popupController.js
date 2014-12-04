@@ -45,7 +45,7 @@ function setupAddStudyAppButton() {
     })
     .fail(function(error){
       console.warn("Failed to send app:", error);
-      displayError("Could not login, please try again");
+      displayError("Error occured. Please try again");
     });
 
   });

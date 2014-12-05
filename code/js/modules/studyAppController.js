@@ -10,13 +10,11 @@ var StudyAppController = {};
 var studyApps, studyAppsDict;
 
 StudyAppController.loadWebApps = function() {
-  var token = authController.getAccessToken();
   var deferred = Q.defer();
   var jqueryPromise = $.ajax({
     type: "GET",
-    url: config.host + "/api/studyapps?flags.web=true",
+    url: config.host + "/api/studyapps?flags.web=true&flags.approved=true",
     headers: {
-      "accessToken": token.get("value"),
       "version": config.apiVersion
     },
   });
@@ -35,7 +33,7 @@ StudyAppController.addStudyApp = function(app) {
         type: "POST",
         url: config.host + "/api/studyapps",
         headers: {
-          "accessToken": token,
+          "Authorization": "Bearer " + token,
           "version": config.apiVersion
         },
         data: JSON.stringify(app),

@@ -13,7 +13,7 @@ var LoginFormController = {};
 var state = {};
 
 function display(id) {
-  var divs = ["addStudyAppForm", "loginForm", "studyStatus"];
+  var divs = ["addStudyAppForm", "loginForm", "studyStatus", "addedStudyApp"];
   _.each(divs, function(div) {
     if (div === id) {
       $("#" + div).show();
@@ -46,6 +46,7 @@ function setupAddStudyAppButton() {
       })
       .then(function(result) {
         console.log("Successfully sent studyApp", result);
+        display("addedStudyApp");
       })
       .fail(function(error) {
         console.warn("Failed to send app:", error);

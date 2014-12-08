@@ -11,9 +11,24 @@ AuthController.saveToken = function(accessToken) {
     url: config.webapp_url,
     name: "accessToken",
     value: accessToken,
-    expirationDate: new Date().getTime() + 3600*24*365*20
+    expirationDate: new Date().getTime()
   };
   chrome.cookies.set(cookieData,deferred.resolve);
+  return deferred.promise;
+};
+
+AuthController.logout = function() {
+  var deferred = Q.defer();
+  var cookieData = {
+    url: config.webapp_url,
+    name: "accessToken",
+    value: "",
+    expirationDate: new Date().getTime(0)
+  };
+  chrome.cookies.set(cookieData,deferred.resolve);
+  deferred.promise.then(function(){
+    bus.emit("state:update", "noCookie");
+  });
   return deferred.promise;
 };
 

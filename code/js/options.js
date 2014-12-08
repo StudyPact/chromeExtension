@@ -1,5 +1,10 @@
-;(function() {
-  console.log('OPTIONS SCRIPT WORKS!');
+'use strict';
 
-  //var msg = require('./modules/bus/msg');
+;(function() {
+  var $ = require('./libs/jquery');
+  var optionsController = require('./modules/optionsController');
+
+  $(document).ready(function() {
+    optionsController.boot();
+  });
 })();

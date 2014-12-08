@@ -269,7 +269,7 @@ td { vertical-align: top; }
 	max-width:210px;
 }
 
-#logout{ 
+#logoutButton{ 
 	width: 90%; 
 	margin-top: 15px;
 	margin-left: auto;
@@ -287,7 +287,7 @@ td { vertical-align: top; }
 	max-width:210px;
 }
 
-#logout:hover {
+#logoutButton:hover {
 	background: #f05a28;
 	text-decoration: none;
 	color: #fff;

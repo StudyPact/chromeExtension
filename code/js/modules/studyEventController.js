@@ -77,7 +77,12 @@ StudyEventController.handleUserStateChange = function(userActive) {
 };
 
 StudyEventController.handleStudyAppChange = function(currentStudyApp) {
-  console.log("Study App Change", currentStudyApp);
+  if(!currentStudyApp){
+    console.log("StudyEventController: no study app");
+  }
+  else{
+    console.log("StudyEventController: Now studying on", currentStudyApp);
+  }
   if(currentStudyApp){
     bus.emit("state:update", "studying");
   }

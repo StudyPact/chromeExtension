@@ -7,8 +7,10 @@
   var studyAppController = require("./modules/studyAppController");
   var studyEventController = require("./modules/studyEventController");
   var iconController = require("./modules/iconController");
+  var stateController = require("./modules/stateController");
 
   function init(){
+    stateController.boot();
     authController.boot();
     activityTracker.boot();
     studyAppController.boot();

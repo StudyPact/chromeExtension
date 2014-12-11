@@ -21,7 +21,9 @@ var messageHandlerMapping = {};
   })
  */
 ChromeBus.on = function(message, handler) {
+  console.log("ChromeBus: setting up handler for message:", message, "with handler:", handler);
   var wrapper = function(request,sender,sendResponse) {
+    console.log("ChromeBus: Wrapper call:", request, "callback", sendResponse);
     if (request.message === message) {
       if (sendResponse){
         request.data.push(sendResponse);
@@ -42,6 +44,7 @@ ChromeBus.removeListener = function(message, handler) {
 
 ChromeBus.emit = function(message) {
   var args = Array.prototype.slice.call(arguments, 1);
+  console.log("ChromeBus: emit ARGS:", arguments, args);
   var last;
   if (args[args.length-1] instanceof Function){
     last = args.pop();
@@ -50,6 +53,7 @@ ChromeBus.emit = function(message) {
     data: args,
     message: message
   };
+  console.log("ChromeBus:emit: emitting data via chrome bus:", content, "with callback", last);
   if (last){
     chrome.runtime.sendMessage(content, last);
   }

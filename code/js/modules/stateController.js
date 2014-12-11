@@ -3,7 +3,7 @@ var bus = require("./lib/chromeBus");
 var systemState = {
   active: true,
   studying: false,
-  cookie: true,
+  cookie: false,
   currentStudyEvent:null
 };
 
@@ -18,7 +18,7 @@ function StateController() {
 
   function sendState(callback){
     console.log("received sendstate with callback");
-    callback(systemState);
+    callback("asdasdasd", systemState);
   }
 
   function handleStateUpdate(stateChange) {
@@ -44,6 +44,7 @@ function StateController() {
   }
 
   function setupHooks() {
+    console.log("StateController: setupHooks");
     bus.on("state:update", handleStateUpdate);
     bus.on("state:request", sendState);
     bus.on("studyevent:start", newStudyEvent);
@@ -58,6 +59,7 @@ function StateController() {
   }
 
   this.boot = function() {
+    console.log("StateController: boot");
     setupHooks();
   };
 

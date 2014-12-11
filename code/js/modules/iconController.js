@@ -1,39 +1,31 @@
 var bus = require("./lib/chromeBus");
 
-var systemState = {
-  active: true,
-  studying: false,
-  cookie: true
-};
+var state = {};
 
 function IconController() {
-  function sendState(callback){
-    console.log("received sendstate with callback");
-    callback(systemState);
-  }
 
   function handleStateUpdate(stateChange) {
     console.log("Icon Controller:", stateChange);
     if (stateChange === "noCookie") {
-      systemState.cookie = false;
+      state.cookie = false;
     }
     if (stateChange === "hasCookie") {
-      systemState.cookie = true;
+      state.cookie = true;
     }
     if (stateChange === "userIdle") {
-      systemState.active = false;
+      state.active = false;
     }
     if (stateChange === "userActive") {
-      systemState.active = true;
+      state.active = true;
     }
     if (stateChange === "studying") {
-      systemState.studying = true;
+      state.studying = true;
     }
     if (stateChange === "notStudying") {
-      systemState.studying = false;
+      state.studying = false;
     }
 
-    if (systemState.cookie) {
+    if (state.cookie) {
       return setLoggedInIcon();
     } else {
       return setIcon("not_login");
@@ -48,21 +40,25 @@ function IconController() {
   }
 
   function setLoggedInIcon() {
-    console.log("setLoggedInIcon", systemState);
-    if (systemState.studying && systemState.active) {
+    console.log("setLoggedInIcon", state);
+    if (state.studying && state.active) {
       return setIcon("tracking");
     }
-    if (systemState.studying && !systemState.active) {
+    if (state.studying && !state.active) {
       return setIcon("sleeping");
     }
-    if (!systemState.studying) {
+    if (!state.studying) {
       return setIcon("login");
     }
   }
 
+  function initializeState(initialState,a,b,c){
+    console.log("received initialState:", initialState,a,b,c);
+    state = initialState;
+  }
+
   function setupHooks() {
     bus.on("state:update", handleStateUpdate);
-    bus.on("state:request", sendState);
   }
 
   function removeHooks() {
@@ -71,6 +67,8 @@ function IconController() {
 
   this.boot = function() {
     setupHooks();
+    console.log("sending state:request");
+    bus.emit("state:request", initializeState);
   };
 
   this.shutdown = function() {

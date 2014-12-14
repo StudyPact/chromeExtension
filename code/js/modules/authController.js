@@ -77,17 +77,13 @@ AuthController.getAccessToken = function() {
     url: config.webapp_url,
     name: "accessToken"
   };
-  console.log("COOKIE Query:", query);
   var deferred = Q.defer();
   chrome.cookies.get(query, deferred.resolve);
   return deferred.promise.then(function(cookie) {
-    console.log("Found COOKIE:", cookie);
     if (cookie && cookie.value) {
-      console.log("Emitting: hasCookie");
       bus.emit("state:update", "hasCookie");
       return cookie.value;
     } else {
-      console.log("Emitting: noCookie");
       bus.emit("state:update", "noCookie");
       throw new Error("Can't find Cookie");
     }

@@ -1,9 +1,10 @@
-var bus = require("./lib/chromeBus");
+var chromeBus = require("./lib/chromeBus");
+var internalBus = require("./lib/simpleBus");
 
 var systemState = {
   active: true,
   studying: false,
-  cookie: true,
+  cookie: false,
   currentStudyEvent:null
 };
 
@@ -44,17 +45,17 @@ function StateController() {
   }
 
   function setupHooks() {
-    bus.on("state:update", handleStateUpdate);
-    bus.on("state:request", sendState);
-    bus.on("studyevent:start", newStudyEvent);
-    bus.on("studyevent:end", endStudyEvent);
+    chromeBus.on("state:update", handleStateUpdate);
+    internalBus.on("state:request", sendState);
+    chromeBus.on("studyevent:start", newStudyEvent);
+    chromeBus.on("studyevent:end", endStudyEvent);
   }
 
   function removeHooks() {
-    bus.removeListener("state:update", handleStateUpdate);
-    bus.removeListener("state:request", sendState);
-    bus.removeListener("studyevent:start", newStudyEvent);
-    bus.removeListener("studyevent:end", endStudyEvent);
+    chromeBus.removeListener("state:update", handleStateUpdate);
+    internalBus.removeListener("state:request", sendState);
+    chromeBus.removeListener("studyevent:start", newStudyEvent);
+    chromeBus.removeListener("studyevent:end", endStudyEvent);
   }
 
   this.boot = function() {

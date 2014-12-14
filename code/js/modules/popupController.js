@@ -7,10 +7,7 @@ var AuthController = require("./authController");
 var StudyAppController = require("./studyAppController");
 var ChromeTools = require("./chromeTools");
 
-var bus = require("./lib/chromeBus");
-
 var LoginFormController = {};
-var state = {};
 
 function display(id) {
   var divs = ["addStudyAppForm", "loginForm", "studyStatus", "addedStudyApp"];
@@ -36,7 +33,6 @@ function setupAddStudyAppButton() {
     Q.all([url, title]).then(function(result) {
         var url = result[0];
         var title = result[1];
-        console.log("received:", url, title);
         var host = urlparse.parse(url).hostname;
         var app = {
           website_urls: [host],
@@ -83,28 +79,15 @@ function setupLoginButton() {
   });
 }
 
-function handleStateUpdate(stateChange) {
-  console.log("Icon Controller:", stateChange);
-  if (stateChange === "studying") {
-    display("studyStatus");
-  }
-  if (stateChange === "notStudying") {
-    display("addStudyAppForm");
-  }
-}
-
-function storeInitialState(initialState) {
-  console.log("storeInitialState called", initialState);
-  state = initialState;
-  if (!state.cookie) {
-    display("loginForm");
-  } else {
-    if (state.studying) {
-      display("studyStatus");
-    } else {
+function checkLogin(){
+  AuthController.isLoggedIn().then(function(isLoggedIn){
+    if(isLoggedIn){
       display("addStudyAppForm");
     }
-  }
+    else{
+      display("loginForm");
+    }
+  });
 }
 
 LoginFormController.boot = function() {
@@ -113,12 +96,10 @@ LoginFormController.boot = function() {
   setupLoginButton();
   setupAddStudyAppButton();
 
-  bus.emit("state:request", storeInitialState);
-  bus.on("state:update", handleStateUpdate);
+  checkLogin();
 };
 
 LoginFormController.shutdown = function() {
-  bus.removeListener("state:update", handleStateUpdate);
 };
 
 module.exports = LoginFormController;

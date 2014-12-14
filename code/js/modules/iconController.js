@@ -1,15 +1,14 @@
-var bus = require("./lib/chromeBus");
+var chromeBus = require("./lib/chromeBus");
+var internalBus = require("./lib/simpleBus");
 
-var systemState = {
-  active: true,
-  studying: false,
-  cookie: true
-};
+var systemState = {};
 
 function IconController() {
-  function sendState(callback){
-    console.log("received sendstate with callback");
-    callback(systemState);
+
+  function storeInitialState(state){
+    console.log("handling initial state:", state);
+    systemState=state;
+    updateIcon();
   }
 
   function handleStateUpdate(stateChange) {
@@ -33,6 +32,10 @@ function IconController() {
       systemState.studying = false;
     }
 
+    updateIcon();
+  }
+
+  function updateIcon(){
     if (systemState.cookie) {
       return setLoggedInIcon();
     } else {
@@ -61,12 +64,12 @@ function IconController() {
   }
 
   function setupHooks() {
-    bus.on("state:update", handleStateUpdate);
-    bus.on("state:request", sendState);
+    chromeBus.on("state:update", handleStateUpdate);
+    internalBus.emit("state:request", storeInitialState);
   }
 
   function removeHooks() {
-    bus.removeListener("state:update", handleStateUpdate);
+    chromeBus.removeListener("state:update", handleStateUpdate);
   }
 
   this.boot = function() {

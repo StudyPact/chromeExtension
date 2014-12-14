@@ -1,25 +1,39 @@
 var chromeBus = require("./lib/chromeBus");
 var internalBus = require("./lib/simpleBus");
+var authController = require("./authController");
+var Q = require("q");
 
-var systemState = {
-  active: true,
-  studying: false,
-  cookie: false,
-  currentStudyEvent:null
-};
+var systemState;
 
 function StateController() {
-  function newStudyEvent(studyEvent){
-    systemState.currentStudyEvent=studyEvent;
+  function newStudyEvent(studyEvent) {
+    systemState.currentStudyEvent = studyEvent;
   }
 
-  function endStudyEvent(){
-    systemState.currentStudyEvent=null;
+  function endStudyEvent() {
+    systemState.currentStudyEvent = null;
   }
 
-  function sendState(callback){
+  function loadState() {
+    var deferred = Q.defer();
+    var initialState = {
+      active: true,
+      studying: false,
+      cookie: false,
+      currentStudyEvent: null
+    };
+    authController.isLoggedIn().then(function(isLoggedIn){
+      initialState.cookie=isLoggedIn;
+      deferred.resolve(initialState);
+    });
+    return deferred.promise;
+  }
+
+  function sendState(callback) {
     console.log("received sendstate with callback");
-    callback(systemState);
+    systemState.then(function(systemState){
+      callback(systemState);
+    });
   }
 
   function handleStateUpdate(stateChange) {
@@ -49,6 +63,8 @@ function StateController() {
     internalBus.on("state:request", sendState);
     chromeBus.on("studyevent:start", newStudyEvent);
     chromeBus.on("studyevent:end", endStudyEvent);
+
+    systemState=loadState();
   }
 
   function removeHooks() {

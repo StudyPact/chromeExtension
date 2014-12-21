@@ -1,4 +1,7 @@
 {
+  "name":"StudyPact",
+  "short_name": "StudyPact",
+  "descirption":"Track your studies, set your study goal and earn money for studying!",
   "manifest_version": 2,
   "icons": {
     "16": "images/Active_icon16.png",
@@ -17,5 +20,6 @@
   "options_page": "html/options.html",
   "permissions": ["<all_urls>", "tabs", "pageCapture", "cookies", "idle"],
   "web_accessible_resources": [ "js/*", "html/*", "css/*", "images/*" ],
-  "content_security_policy": "script-src 'self'; object-src 'self'"
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "homepage_url": "https://www.studypact.com"
 }

@@ -9,6 +9,9 @@ var userState={
 };
 function ActivityTracker() {
   function handleStateChange(state) {
+    if (true){
+      return; //disabling state change tracking
+    }
     var userActive;
     if (state === "idle") {
       userActive=false;

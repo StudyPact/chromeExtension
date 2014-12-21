@@ -1,7 +1,7 @@
 {
   "name":"StudyPact",
   "short_name": "StudyPact",
-  "descirption":"Track your studies, set your study goal and earn money for studying!",
+  "description":"Track your studies, set your study goal and earn money for studying!",
   "manifest_version": 2,
   "icons": {
     "16": "images/Active_icon16.png",

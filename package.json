@@ -1,6 +1,6 @@
 {
   "name": "StudyPact-Chrome",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Track your studies and earn money for completing your study goals.",
   "dependencies": {
     "q": "^1.1.2",

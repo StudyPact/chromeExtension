@@ -1,9 +1,9 @@
 var Config = {
-  host: "https://studypact-rest-test.herokuapp.com",
-  webapp_url: "http://studypact-webapp-test.herokuapp.com",
+  host: "https://studypact-rest.herokuapp.com",
+  webapp_url: "https://app.studypact.com",
   apiVersion: 2,
-  client_id: "ZxaoIsUoshMow5Dx",
-  client_secret: "njNA842Msr6IVbyfO3X3Ag32Q66jl6IO"
+  client_id: "piu1ebiTa6eiMohn",
+  client_secret: "Oo2Gooph4pae5eaZ8Aiyiemoh3peimuw",
 };
 
 Config.boot= function() {};
